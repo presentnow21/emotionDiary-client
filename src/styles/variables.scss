@@ -1,0 +1,21 @@
+$grayColor: #ececec;
+
+$emotion1: #64c964;
+$emotion1: #9dd772;
+$emotion1: #fdce17;
+$emotion1: #fd8446;
+$emotion1: #fd565f;
+
+$fontRegular: 17px;
+$fontLarge: 19px;
+
+$border: 1px solid #e2e2e2;
+
+$basicFont: 'Nanum Pen Script';
+$textFont: 'Yeon Sung';
+
+@mixin flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
