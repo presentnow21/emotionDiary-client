@@ -1,0 +1,44 @@
+@import '../../../styles/variables.scss';
+
+.EmotionItem {
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  cursor: pointer;
+
+  img {
+    width: 50%;
+    margin-bottom: 10px;
+  }
+
+  span {
+    font-size: 18px;
+  }
+}
+.EmotionItem_off {
+  background-color: #e2e2e2;
+}
+
+.EmotionItem_on1 {
+  background-color: $emotion1;
+  color: white;
+}
+.EmotionItem_on2 {
+  background-color: $emotion2;
+  color: white;
+}
+.EmotionItem_on3 {
+  background-color: $emotion3;
+  color: white;
+}
+.EmotionItem_on4 {
+  background-color: $emotion4;
+  color: white;
+}
+.EmotionItem_on5 {
+  background-color: $emotion5;
+  color: white;
+}

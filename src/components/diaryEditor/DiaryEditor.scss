@@ -1,0 +1,47 @@
+@import '../../styles/variables.scss';
+
+.DiaryEditor {
+  section {
+    margin-bottom: 40px;
+  }
+
+  h4 {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 200px;
+    padding: 20px;
+    background-color: #e2e2e2;
+    font-family: $basicFont;
+    font-size: 20px;
+    box-sizing: border-box;
+    resize: vertical;
+    border: none;
+    border-radius: 5px;
+  }
+
+  .input_date {
+    padding: 10px 20px;
+    background-color: #ececec;
+    border: none;
+    border-radius: 5px;
+    font-family: $basicFont;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .emotion_list_wrapper {
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    gap: 2%;
+  }
+
+  .control_box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

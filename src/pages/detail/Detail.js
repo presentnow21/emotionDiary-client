@@ -66,7 +66,7 @@ const Detail = () => {
                 `detail_img_${curEmotionData.emotion_id}`,
               ].join(' ')}
             >
-              <img src={curEmotionData.emotion_img} />
+              <img alt="emotion_img" src={curEmotionData.emotion_img} />
               <div>{curEmotionData.emotion_description}</div>
             </div>
           </section>
