@@ -1,0 +1,31 @@
+@import './styles//variables.scss';
+
+body {
+  @include flexCenter;
+  min-height: 100vh;
+  margin: 0;
+  background-color: #f6f6f6;
+  font-family: $basicFont;
+}
+
+#root {
+  background-color: white;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.App {
+  min-height: 100vh;
+  padding: 0 20px;
+}
+
+@media (min-width: 650px) {
+  .App {
+    width: 640px;
+  }
+}
+
+@media (max-width: 650px) {
+  .App {
+    width: 90vw;
+  }
+}

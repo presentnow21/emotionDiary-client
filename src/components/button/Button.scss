@@ -1,0 +1,26 @@
+@import '../../styles//variables.scss';
+
+.Button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: $fontLarge;
+  white-space: nowrap;
+  font-family: $basicFont;
+  cursor: pointer;
+}
+
+.btn_default {
+  background-color: $grayColor;
+  color: black;
+}
+
+.btn_positive {
+  background-color: $emotion1;
+  color: white;
+}
+
+.btn_negative {
+  background-color: $emotion1;
+  color: white;
+}

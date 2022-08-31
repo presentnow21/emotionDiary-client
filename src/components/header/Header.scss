@@ -1,0 +1,27 @@
+@import '../../styles/variables.scss';
+
+.Header {
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid $grayColor;
+  & > div {
+    display: flex;
+  }
+  & button {
+    font-family: $basicFont;
+  }
+  .head_text {
+    width: 50%;
+    justify-content: center;
+    font-size: $fontLarge;
+  }
+  .head_btn_left {
+    width: 25%;
+    justify-content: start;
+  }
+  .head_btn_right {
+    width: 25%;
+    justify-content: end;
+  }
+}
