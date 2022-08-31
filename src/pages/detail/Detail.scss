@@ -1,0 +1,55 @@
+@import '../../styles/variables.scss';
+
+.Detail {
+  .detail_img_1 {
+    background-color: $emotion1;
+  }
+  .detail_img_2 {
+    background-color: $emotion2;
+  }
+  .detail_img_3 {
+    background-color: $emotion3;
+  }
+  .detail_img_4 {
+    background-color: $emotion4;
+  }
+  .detail_img_5 {
+    background-color: $emotion5;
+  }
+
+  .emotion_img_wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width: 250px;
+    height: 250px;
+    border-radius: 5px;
+    color: white;
+  }
+
+  section {
+    width: 100%;
+    margin-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-size: $fontLarge;
+  }
+
+  .diary_content_wrapper {
+    width: 100%;
+    border-radius: 5px;
+    background-color: $grayColor;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+
+    p {
+      padding: 20px;
+      font-family: $textFont;
+      font-size: $fontLarge;
+      text-align: left;
+    }
+  }
+}
