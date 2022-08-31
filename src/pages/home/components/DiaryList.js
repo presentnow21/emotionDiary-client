@@ -89,7 +89,7 @@ const DiaryList = ({ diaryList }) => {
       </div>
 
       {getProcessedDiaryList().map((item) => {
-        return <DiaryItem key={item.id} {...item} />;
+        return <DiaryItem key={item._id} {...item} />;
       })}
     </div>
   );

@@ -38,9 +38,15 @@ function App() {
   }, []);
 
   const getDiaryList = async () => {
-    let res = await fetch('/data/diaryList.json');
-    let result = await res.json();
-    dispatch({ type: 'INIT', data: result });
+    try {
+      // let res = await fetch('/data/diaryList.json');
+      let res = await fetch('http://localhost:8000/diary');
+      let result = await res.json();
+      dispatch({ type: 'INIT', data: result });
+    } catch (err) {
+      alert('다시 시도해주세요');
+      return;
+    }
   };
 
   const onCreate = (date, content, emotion) => {

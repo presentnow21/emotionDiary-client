@@ -11,24 +11,13 @@ const Detail = () => {
   const [data, setData] = useState();
   const navigate = useNavigate();
   const { id } = useParams();
-  const diaryList = useContext(DiaryContext).data;
 
   useEffect(() => {
-    if (diaryList.length > 0) {
-      const foundedItem = diaryList.find(
-        (item) => parseInt(item.id) === parseInt(id)
-      );
-      if (foundedItem) {
-        setData(foundedItem);
-      } else {
-        alert('없는 일기입니다.');
-        navigate('/', { replace: true });
-      }
-    }
-  }, [diaryList, id]);
+    getDiaryDetail();
+  }, []);
 
   const getDiaryDetail = async () => {
-    let res = await fetch(`http://localhost:8000/diay/${id}`);
+    let res = await fetch(`http://localhost:8000/diary/${id}`);
     try {
       let result = await res.json();
       setData(result);
@@ -53,7 +42,7 @@ const Detail = () => {
           rightChild={
             <Button
               text="수정하기"
-              onClick={() => navigate(`/edit/${data.id}`)}
+              onClick={() => navigate(`/edit/${data._id}`)}
             />
           }
         />

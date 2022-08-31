@@ -3,16 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../../components/button/Button';
 import './DiaryItem.scss';
 
-const DiaryItem = ({ id, emotion, content, date }) => {
+const DiaryItem = ({ _id, emotion, content, date }) => {
   const navigate = useNavigate();
 
   const strDate = new Date(parseInt(date)).toLocaleDateString();
   const goToDetail = () => {
-    navigate(`/detail/${id}`);
+    navigate(`/detail/${_id}`);
   };
 
   const goToEdit = () => {
-    navigate(`/edit/${id}`);
+    navigate(`/edit/${_id}`);
   };
 
   return (
