@@ -4,7 +4,7 @@
   padding: 20px 0;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid $grayColor;
+  border-bottom: $border;
   & > div {
     display: flex;
   }
