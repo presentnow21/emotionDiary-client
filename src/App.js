@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useRef } from 'react';
+import React, { useEffect, useReducer, useRef, useState } from 'react';
 import Router from './Router';
 import './App.scss';
 
@@ -12,12 +12,12 @@ const reducer = (state, action) => {
       break;
     }
     case 'REMOVE': {
-      newSate = state.filter((item) => item.id !== action.targetId);
+      newSate = state.filter((item) => item._id !== action.targetId);
       break;
     }
     case 'EDIT': {
       newSate = state.map((item) =>
-        item.id === action.data.id ? { ...action.data } : item
+        item._id === action.data._id ? { ...action.data } : item
       );
       break;
     }
@@ -31,7 +31,6 @@ export const DiaryContext = React.createContext();
 
 function App() {
   const [data, dispatch] = useReducer(reducer, []);
-  const dateId = useRef(0);
 
   useEffect(() => {
     getDiaryList();
@@ -44,22 +43,46 @@ function App() {
       let result = await res.json();
       dispatch({ type: 'INIT', data: result });
     } catch (err) {
-      alert('다시 시도해주세요');
+      alert('diary를 불러오지 못했습니다. 다시 시도해주세요');
       return;
     }
   };
 
-  const onCreate = (date, content, emotion) => {
-    dispatch({
-      type: 'CREATE',
-      data: {
-        id: dateId.current,
-        date: new Date(date).getTime(),
-        emotion,
-        content,
-      },
-    });
-    dateId.current += 1;
+  const postDiary = async (diaryItem) => {
+    try {
+      let res = await fetch('http://localhost:8000/diary', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(diaryItem),
+      });
+      return await res.json();
+    } catch (err) {
+      throw new Error('post fail');
+    }
+  };
+
+  const onCreate = async (date, content, emotion) => {
+    const diaryItem = {
+      date: new Date(date).getTime(),
+      emotion,
+      content,
+    };
+    try {
+      let result = await postDiary(diaryItem);
+      let id = result._id;
+
+      dispatch({
+        type: 'CREATE',
+        data: {
+          _id: id,
+          ...diaryItem,
+        },
+      });
+    } catch (err) {
+      alert('저장에 실패했습니다. 다시 시도해주세요');
+    }
   };
 
   const onRemove = (targetId) => {

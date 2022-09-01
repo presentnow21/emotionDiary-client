@@ -1,4 +1,5 @@
 import './Button.scss';
+import React from 'react';
 
 const Button = ({ text, onClick, type }) => {
   const btnType = ['positive', 'negative'].includes(type) ? type : 'default';
@@ -13,4 +14,4 @@ const Button = ({ text, onClick, type }) => {
   );
 };
 
-export default Button;
+export default React.memo(Button);

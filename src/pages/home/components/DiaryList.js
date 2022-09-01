@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../../components/button/Button';
 import DiaryItem from './DiaryItem';
@@ -62,6 +62,10 @@ const DiaryList = ({ diaryList }) => {
     return sortedList;
   };
 
+  const goToNew = useCallback(() => {
+    navigate('/new');
+  }, []);
+
   return (
     <div className="DiaryList">
       <div className="menu_wrapper">
@@ -78,13 +82,7 @@ const DiaryList = ({ diaryList }) => {
           />
         </div>
         <div className="right_col">
-          <Button
-            type="positive"
-            text={'새 일기쓰기'}
-            onClick={() => {
-              navigate('/new');
-            }}
-          />
+          <Button type="positive" text={'새 일기쓰기'} onClick={goToNew} />
         </div>
       </div>
 
