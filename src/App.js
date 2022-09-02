@@ -2,6 +2,7 @@ import React, { useEffect, useReducer, useRef, useState } from 'react';
 import Router from './Router';
 import './App.scss';
 
+
 const reducer = (state, action) => {
   let newSate = [];
   switch (action.type) {
@@ -31,6 +32,7 @@ export const DiaryContext = React.createContext();
 
 function App() {
   const [data, dispatch] = useReducer(reducer, []);
+
 
   useEffect(() => {
     getDiaryList();
@@ -85,9 +87,20 @@ function App() {
     }
   };
 
-  const onRemove = (targetId) => {
-    dispatch({ type: 'REMOVE', targetId });
+  const onRemove = (targetId,navigate) => {
+    fetch(`http://localhost:8000/diary/${targetId}`,{
+      method:'DELETE'
+    }).then(res=>{
+      if(res.ok){
+        dispatch({ type: 'REMOVE', targetId });
+        navigate('/', { replace: true });
+      }
+    }).catch(err=>{
+      alert('일기를 삭제하지 못했습니다. \n 다시 시도해주세요')
+    })
   };
+
+ 
 
   const onEdit = (targetId, content, emotion, date) => {
     dispatch({

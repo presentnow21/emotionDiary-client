@@ -22,6 +22,8 @@ const DiaryEditor = ({ isEdit, originData }) => {
   const navigate = useNavigate();
   const { onCreate, onEdit, onRemove } = useContext(DiaryContext);
 
+  
+
   useEffect(() => {
     if (isEdit) {
       setDate(toStringDate(new Date(originData.date)));
@@ -47,7 +49,7 @@ const DiaryEditor = ({ isEdit, originData }) => {
       if (!isEdit) {
         onCreate(date, content, emotion);
       } else {
-        onEdit(originData.id, content, emotion, date);
+        onEdit(originData._id, content, emotion, date);
       }
     }
     navigate('/', { replace: true });
@@ -55,8 +57,7 @@ const DiaryEditor = ({ isEdit, originData }) => {
 
   const handleRemove = () => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
-      onRemove(originData.id);
-      navigate('/', { replace: true });
+      onRemove(originData._id,navigate);
     }
   };
 
