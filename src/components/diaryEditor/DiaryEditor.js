@@ -48,18 +48,22 @@ const DiaryEditor = ({ isEdit, originData }) => {
     ) {
       if (!isEdit) {
         onCreate(date, content, emotion);
+        navigate('/', { replace: true });
       } else {
-        onEdit(originData._id, content, emotion, date);
+        onEdit(originData._id, content, emotion, date,navigate);
       }
     }
-    navigate('/', { replace: true });
   };
 
-  const handleRemove = () => {
+  const handleRemove = useCallback(() => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
       onRemove(originData._id,navigate);
     }
-  };
+  },[]);
+
+  const goBack = useCallback(()=>{
+    navigate(-1)
+  },[])
 
   return (
     <div className="DiaryEditor">
@@ -68,9 +72,7 @@ const DiaryEditor = ({ isEdit, originData }) => {
         leftChild={
           <Button
             text="< 뒤로가기"
-            onClick={() => {
-              navigate(-1);
-            }}
+            onClick={goBack}
           />
         }
         rightChild={
@@ -120,7 +122,7 @@ const DiaryEditor = ({ isEdit, originData }) => {
         <section>
           <div className="control_box">
             <Button text={'취소하기'} onClick={() => navigate(-1)} />
-            <Button text={'저장완료'} type="positive" onClick={handleSubmit} />
+            <Button text={isEdit ? '수정완료':'저장완료'} type="positive" onClick={handleSubmit} />
           </div>
         </section>
       </div>

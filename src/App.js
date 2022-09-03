@@ -102,16 +102,81 @@ function App() {
 
  
 
-  const onEdit = (targetId, content, emotion, date) => {
-    dispatch({
-      type: 'EDIT',
-      data: {
-        id: targetId,
-        date: new Date(date).getTime(),
-        emotion,
-        content,
-      },
-    });
+  // const onEdit = (targetId, content, emotion, date,navigate) => {
+
+  //   const diary = {
+  //     date:new Date(date).getTime(),
+  //     _id:targetId,
+  //     content,
+  //     emotion,
+  //   }
+
+ 
+  //   try{
+  //     fetch(`http://localhost:8000/diary/${targetId}`,{
+  //       method:'PATCH',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body:JSON.stringify(diary)
+  //     }).then(res=>{
+  //       if(res.ok){
+  //         dispatch({
+  //           type: 'EDIT',
+  //           data: {
+  //             _id: targetId,
+  //             date: new Date(date).getTime(),
+  //             emotion,
+  //             content,
+  //           },
+  //         });
+  //         navigate('/', { replace: true });
+  //       }
+  //     })
+  //   }
+  //   catch(err){
+  //     alert('일기 수정에 실패했습니다')
+  //   }
+
+  // };
+
+  const onEdit = async (targetId, content, emotion, date,navigate) => {
+
+    const diary = {
+      date:new Date(date).getTime(),
+      _id:targetId,
+      content,
+      emotion,
+    }
+
+ 
+    try{
+      let res = await fetch(`http://localhost:8000/diary/${targetId}`,{
+        method:'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body:JSON.stringify(diary)
+      })
+      
+      if(res.ok){
+        dispatch({
+          type: 'EDIT',
+          data: {
+            _id: targetId,
+            date: new Date(date).getTime(),
+            emotion,
+            content,
+          },
+        });
+        navigate('/', { replace: true });
+      }
+
+    }
+    catch(err){
+      alert('일기 수정에 실패했습니다')
+    }
+
   };
 
   if (data.length > 0) {
