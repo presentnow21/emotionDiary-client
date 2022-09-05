@@ -1,8 +1,7 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Button from '../../components/button/Button';
 import Header from '../../components/header/Header';
-import { DiaryContext } from '../../App';
 import { emotionList } from '../../utile/emotionList';
 import { toStringDate } from '../../utile/toStringDate';
 import './Detail.scss';

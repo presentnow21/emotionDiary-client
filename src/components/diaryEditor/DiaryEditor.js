@@ -22,8 +22,6 @@ const DiaryEditor = ({ isEdit, originData }) => {
   const navigate = useNavigate();
   const { onCreate, onEdit, onRemove } = useContext(DiaryContext);
 
-  
-
   useEffect(() => {
     if (isEdit) {
       setDate(toStringDate(new Date(originData.date)));
@@ -50,31 +48,26 @@ const DiaryEditor = ({ isEdit, originData }) => {
         onCreate(date, content, emotion);
         navigate('/', { replace: true });
       } else {
-        onEdit(originData._id, content, emotion, date,navigate);
+        onEdit(originData._id, content, emotion, date, navigate);
       }
     }
   };
 
   const handleRemove = useCallback(() => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
-      onRemove(originData._id,navigate);
+      onRemove(originData._id, navigate);
     }
-  },[]);
+  }, []);
 
-  const goBack = useCallback(()=>{
-    navigate(-1)
-  },[])
+  const goBack = useCallback(() => {
+    navigate(-1);
+  }, []);
 
   return (
     <div className="DiaryEditor">
       <Header
         headText={isEdit ? '일기 수정하기' : '새 일기쓰기'}
-        leftChild={
-          <Button
-            text="< 뒤로가기"
-            onClick={goBack}
-          />
-        }
+        leftChild={<Button text="< 뒤로가기" onClick={goBack} />}
         rightChild={
           isEdit && (
             <Button text="삭제" type="negative" onClick={handleRemove} />
@@ -121,8 +114,12 @@ const DiaryEditor = ({ isEdit, originData }) => {
         </section>
         <section>
           <div className="control_box">
-            <Button text={'취소하기'} onClick={() => navigate(-1)} />
-            <Button text={isEdit ? '수정완료':'저장완료'} type="positive" onClick={handleSubmit} />
+            <Button text={'취소하기'} onClick={goBack} />
+            <Button
+              text={isEdit ? '수정완료' : '저장완료'}
+              type="positive"
+              onClick={handleSubmit}
+            />
           </div>
         </section>
       </div>

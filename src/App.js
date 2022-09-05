@@ -2,7 +2,6 @@ import React, { useEffect, useReducer, useRef, useState } from 'react';
 import Router from './Router';
 import './App.scss';
 
-
 const reducer = (state, action) => {
   let newSate = [];
   switch (action.type) {
@@ -32,7 +31,6 @@ export const DiaryContext = React.createContext();
 
 function App() {
   const [data, dispatch] = useReducer(reducer, []);
-
 
   useEffect(() => {
     getDiaryList();
@@ -87,79 +85,39 @@ function App() {
     }
   };
 
-  const onRemove = (targetId,navigate) => {
-    fetch(`http://localhost:8000/diary/${targetId}`,{
-      method:'DELETE'
-    }).then(res=>{
-      if(res.ok){
-        dispatch({ type: 'REMOVE', targetId });
-        navigate('/', { replace: true });
-      }
-    }).catch(err=>{
-      alert('일기를 삭제하지 못했습니다. \n 다시 시도해주세요')
+  const onRemove = (targetId, navigate) => {
+    fetch(`http://localhost:8000/diary/${targetId}`, {
+      method: 'DELETE',
     })
+      .then((res) => {
+        if (res.ok) {
+          dispatch({ type: 'REMOVE', targetId });
+          navigate('/', { replace: true });
+        }
+      })
+      .catch((err) => {
+        alert('일기를 삭제하지 못했습니다. \n 다시 시도해주세요');
+      });
   };
 
- 
-
-  // const onEdit = (targetId, content, emotion, date,navigate) => {
-
-  //   const diary = {
-  //     date:new Date(date).getTime(),
-  //     _id:targetId,
-  //     content,
-  //     emotion,
-  //   }
-
- 
-  //   try{
-  //     fetch(`http://localhost:8000/diary/${targetId}`,{
-  //       method:'PATCH',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body:JSON.stringify(diary)
-  //     }).then(res=>{
-  //       if(res.ok){
-  //         dispatch({
-  //           type: 'EDIT',
-  //           data: {
-  //             _id: targetId,
-  //             date: new Date(date).getTime(),
-  //             emotion,
-  //             content,
-  //           },
-  //         });
-  //         navigate('/', { replace: true });
-  //       }
-  //     })
-  //   }
-  //   catch(err){
-  //     alert('일기 수정에 실패했습니다')
-  //   }
-
-  // };
-
-  const onEdit = async (targetId, content, emotion, date,navigate) => {
-
+  const onEdit = async (targetId, content, emotion, date, navigate) => {
     const diary = {
-      date:new Date(date).getTime(),
-      _id:targetId,
+      date: new Date(date).getTime(),
+      _id: targetId,
       content,
       emotion,
-    }
+    };
 
- 
-    try{
-      let res = await fetch(`http://localhost:8000/diary/${targetId}`,{
-        method:'PATCH',
+    try {
+      let res = await fetch(`http://localhost:8000/diary/${targetId}`, {
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
-        body:JSON.stringify(diary)
-      })
-      
-      if(res.ok){
+        body: JSON.stringify(diary),
+      });
+
+      if (res.ok) {
         dispatch({
           type: 'EDIT',
           data: {
@@ -171,12 +129,9 @@ function App() {
         });
         navigate('/', { replace: true });
       }
-
+    } catch (err) {
+      alert('일기 수정에 실패했습니다');
     }
-    catch(err){
-      alert('일기 수정에 실패했습니다')
-    }
-
   };
 
   if (data.length > 0) {

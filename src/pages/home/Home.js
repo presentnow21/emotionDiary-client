@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState,useCallback } from 'react';
+import React, { useContext, useEffect, useState, useCallback } from 'react';
 import { DiaryContext } from '../../App';
 import Button from '../../components/button/Button';
 import Header from '../../components/header/Header';
@@ -26,28 +26,26 @@ const Home = () => {
     );
   }, [date, diaryList]);
 
-
   const decreaseDate = useCallback(() => {
-    setDate((date)=>{
-      return new Date(date.getFullYear(), date.getMonth() - 1)
-    })
-  },[]);
-
+    setDate((date) => {
+      return new Date(date.getFullYear(), date.getMonth() - 1);
+    });
+  }, []);
 
   const increaseDate = useCallback(() => {
-    setDate((date)=>{
-      return  new Date(date.getFullYear(), date.getMonth() + 1)
-    })
-  },[]);
+    setDate((date) => {
+      return new Date(date.getFullYear(), date.getMonth() + 1);
+    });
+  }, []);
 
   return (
     <div className="Home">
       <Header
         headText={nowDate}
         leftChild={<Button text="<" onClick={decreaseDate} />}
-        rightChild={<Button text='>' onClick={increaseDate} />}
+        rightChild={<Button text=">" onClick={increaseDate} />}
       />
-      <DiaryList diaryList={data} />
+      <DiaryList diaryList={data} date={date} />
     </div>
   );
 };
