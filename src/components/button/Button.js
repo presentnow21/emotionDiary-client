@@ -1,5 +1,5 @@
-import './Button.scss';
 import React from 'react';
+import './Button.scss';
 
 const Button = ({ text, onClick, type }) => {
   const btnType = ['positive', 'negative'].includes(type) ? type : 'default';

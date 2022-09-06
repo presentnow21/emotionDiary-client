@@ -5,8 +5,8 @@ import './DiaryItem.scss';
 
 const DiaryItem = ({ _id, emotion, content, date }) => {
   const navigate = useNavigate();
-
   const strDate = new Date(parseInt(date)).toLocaleDateString();
+
   const goToDetail = () => {
     navigate(`/detail/${_id}`);
   };

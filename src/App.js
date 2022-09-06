@@ -38,7 +38,6 @@ function App() {
 
   const getDiaryList = async () => {
     try {
-      // let res = await fetch('/data/diaryList.json');
       let res = await fetch('http://localhost:8000/diary');
       let result = await res.json();
       dispatch({ type: 'INIT', data: result });
@@ -85,19 +84,18 @@ function App() {
     }
   };
 
-  const onRemove = (targetId, navigate) => {
-    fetch(`http://localhost:8000/diary/${targetId}`, {
-      method: 'DELETE',
-    })
-      .then((res) => {
-        if (res.ok) {
-          dispatch({ type: 'REMOVE', targetId });
-          navigate('/', { replace: true });
-        }
-      })
-      .catch((err) => {
-        alert('일기를 삭제하지 못했습니다. \n 다시 시도해주세요');
+  const onRemove = async (targetId, navigate) => {
+    try {
+      let res = await fetch(`http://localhost:8000/diary/${targetId}`, {
+        method: 'DELETE',
       });
+      if (res.ok) {
+        dispatch({ type: 'REMOVE', targetId });
+        navigate('/', { replace: true });
+      }
+    } catch (err) {
+      alert('일기를 삭제하지 못했습니다. \n 다시 시도해주세요');
+    }
   };
 
   const onEdit = async (targetId, content, emotion, date, navigate) => {
@@ -120,12 +118,7 @@ function App() {
       if (res.ok) {
         dispatch({
           type: 'EDIT',
-          data: {
-            _id: targetId,
-            date: new Date(date).getTime(),
-            emotion,
-            content,
-          },
+          data: diary,
         });
         navigate('/', { replace: true });
       }

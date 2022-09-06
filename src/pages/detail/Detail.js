@@ -26,6 +26,14 @@ const Detail = () => {
     }
   };
 
+  const goBack = () => {
+    navigate('/');
+  };
+
+  const goEditPage = () => {
+    navigate(`/edit/${data._id}`);
+  };
+
   if (!data) {
     return <div>로딩중 입니다...</div>;
   } else {
@@ -37,13 +45,8 @@ const Detail = () => {
       <div className="Detail">
         <Header
           headText={`${toStringDate(new Date(data.date))} 기록`}
-          leftChild={<Button text="< 뒤로가기" onClick={() => navigate('/')} />}
-          rightChild={
-            <Button
-              text="수정하기"
-              onClick={() => navigate(`/edit/${data._id}`)}
-            />
-          }
+          leftChild={<Button text="< 뒤로가기" onClick={goBack} />}
+          rightChild={<Button text="수정하기" onClick={goEditPage} />}
         />
         <article>
           <section>

@@ -63,6 +63,14 @@ const DiaryEditor = ({ isEdit, originData }) => {
     navigate(-1);
   }, []);
 
+  const handleDate = useCallback((e) => {
+    setDate(e.target.value);
+  }, []);
+
+  const handleContent = useCallback((e) => {
+    setContent(e.target.value);
+  }, []);
+
   return (
     <div className="DiaryEditor">
       <Header
@@ -82,9 +90,7 @@ const DiaryEditor = ({ isEdit, originData }) => {
               className="input_date"
               type="date"
               value={date}
-              onChange={(e) => {
-                setDate(e.target.value);
-              }}
+              onChange={handleDate}
             />
           </div>
         </section>
@@ -108,7 +114,7 @@ const DiaryEditor = ({ isEdit, originData }) => {
               placeholder="오늘은 어땠나요?"
               value={content}
               ref={contentRef}
-              onChange={(e) => setContent(e.target.value)}
+              onChange={handleContent}
             />
           </div>
         </section>

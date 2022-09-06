@@ -2,37 +2,9 @@ import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../../components/button/Button';
 import DiaryItem from './DiaryItem';
+import ControlMenu, { sortOptionList, filterOptionList } from './ControlMenu';
 import Pagination from './Pagination';
 import './DiaryList.scss';
-
-const sortOptionList = [
-  { value: 'latest', name: '최신순' },
-  { value: 'oldest', name: '오래된 순' },
-];
-
-const filterOptionList = [
-  { value: 'all', name: '전부다' },
-  { value: 'good', name: '좋은감정만' },
-  { value: 'bad', name: '안좋은감정만' },
-];
-
-const ControlMenu = React.memo(({ value, onChange, optionList }) => {
-  return (
-    <select
-      className="ControlMenu"
-      value={value}
-      onChange={(e) => {
-        onChange(e.target.value);
-      }}
-    >
-      {optionList.map((item) => (
-        <option key={item.value} value={item.value}>
-          {item.name}
-        </option>
-      ))}
-    </select>
-  );
-});
 
 const DiaryList = ({ diaryList, date }) => {
   const navigate = useNavigate();
