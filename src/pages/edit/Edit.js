@@ -1,26 +1,27 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { DiaryContext } from '../../App';
 import DiaryEditor from '../../components/diaryEditor/DiaryEditor';
 
 const Edit = () => {
   const [originData, setOriginData] = useState();
   const navigate = useNavigate();
   const { id } = useParams();
-  const DiaryList = useContext(DiaryContext).data;
+
+  const getDiaryItem = async () => {
+    try {
+      let res = await fetch(`http://localhost:8000/diary/${id}`);
+      let result = await res.json();
+      setOriginData(result);
+    } catch (err) {
+      alert('데이터를 불러오지 못했습니다.\n 다시 시도해주세요');
+      navigate('/', { replace: true });
+    }
+  };
 
   useEffect(() => {
-    if (DiaryList.length >= 1) {
-      const targetDiary = DiaryList.find(
-        (item) => parseInt(item._id) === parseInt(id)
-      );
-      if (targetDiary) {
-        setOriginData(targetDiary);
-      } else {
-        navigate('/', { replace: true });
-      }
-    }
-  }, [id, DiaryList]);
+    getDiaryItem();
+  }, []);
+
   return (
     <div>
       {originData && <DiaryEditor isEdit={true} originData={originData} />}
