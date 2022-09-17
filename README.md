@@ -1,70 +1,84 @@
-# Getting Started with Create React App
+# App 소개
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+인프런 winterlood님의 react 강의를 수강하여 만든, 오늘 하루 나의 감정을 정리하는 시간을 갖을 수 있는 감정 일기장 입니다.<br>
+프로젝트를 개선하기 위해 추가적인 최적화 작업을 진행하였고, node.js, mongoDB를 이용하여 client 에서만 관리하던 데이터를 네트워크 통신을 통해 데이터를 관리하도록 했습니다.
 
-## Available Scripts
+<br>
 
-In the project directory, you can run:
+## 미리보기
+<div>
+  <img width="200" alt="home" src="https://user-images.githubusercontent.com/102470076/190857680-ce80cb16-3405-490c-909a-80a35919ab04.png" >
+  <img width="200" alt="detail;" src="https://user-images.githubusercontent.com/102470076/190857707-18372b42-e4fc-48c5-97ce-2bd6e36bf83d.png">
+  <img width="200" alt="new" src="https://user-images.githubusercontent.com/102470076/190857739-3c8ec64f-5172-400b-92bd-0a25b19a9475.png">
+  <img width="200" alt="edit" src="https://user-images.githubusercontent.com/102470076/190857743-c4c4351e-cbf8-4b5e-9a77-f0a131c07e97.png">
+</div>
 
-### `npm start`
+<br>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 범용성 컴포넌트
+여러 페이지들에서 사용되는 재사용성이 좋은 기능을 컴포넌트화 한다.
+###  1. `Header`
+- headText, leftChild, rightChild 를 props로 전달받아 전달받은 props에 따라 버튼의 text, onClick함수, 색상을 달리하여 나타낸다.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+###  2. `Button`
+- text, onClick, type 을 props로 전달받아, 전달받은 props에 따라 버튼의 text, onClick함수, 색상을 달리하여 나타낸다.
 
-### `npm test`
+###  3. `DiaryEditor`
+- edit 페이지와 new 페이지에 사용되는 컴포넌트로 isEdit, originData props를 전달받는다.
+- isEdit 을 통해 edit 페이지인지를 식별하고, 수정하고자 하는 다이어리 아이템의 데이터를 originData 로 전달받는다.
+- edit 페이지와 new 페이지에 사용되기 때문에 isEdit 의 값에 따라 다른 기능의 함수가 호출되고, 화면에 다르게 나타난다. 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<br>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 주요기능
+###  1. `일기 추가`
+- user가 입력한 날짜, 감정점수, 일기내용을 데이터베이스에 저장하기 위해 server로 POST요청을 보낸다.
+- 데이터베이스에 저장한 후, useReducer 의 dispatch를 호출하고, 이전 state에 새로운 다이어리를 추가한다.
+- user는 일기가 추가된 화면을 볼 수 있다.
 
-### `npm run eject`
+###  2. `일기 삭제`
+- 일기의 고유 아이디를 전달받아, server로 delete 요청을 보낸다.
+- 요청에 대한 응답이 성공적인 경우, dispatch를 호출하고, 해당 아이디를 가진 다이어리를 filter를 통해 state에서 제거한다.
+- user는 해당 다이어리가 삭제된 화면을 볼 수 있다.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+###  3. `일기 수정`
+- 수정할 다이어리의 고유 아이디, 날짜, 등의 정보를 받아, server로 PATCH요청을 보낸다.
+- 해당 요청이 성공적일 경우, dispatch를 호출하고, map을 통해, 이전 다이어리 state에서 수정하고자 하는 다이어리의 고유 아이디와 일치하는 요소를 찾아서, 받아온 정보와 맵핑한다.
+- user는 해당 다이어리가 수정된 화면을 볼 수 있다.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+###  4. `데이터 sort, filter`
+- 다이어리 리스트 중에서 해당하는 월에 포함되는 다이어리들을 보여준다.
+- 최신순, 오래된순 option을 선택함으로, 날짜에 따라 정렬하여 보여준다.
+- 감정option 을 선택함으로, 감정 점수를 기준으로 filter하여 보여준다.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+<br>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 최적화
+### 1. `React.memo`
+- 함수 자체를 기억하여 컴포넌트가 재렌더링이 될때마다 복잡한 연산의 함수가 재생성 되는 것을 막는다.
+- 컴포넌트의 state, props의 변경이 생겼을 때만 렌더링 하도록 하여 자식 컴포넌트의 렌더링을 최소화한다.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 2. `useCallback`
+- 컴포넌트 렌더링 결과를 기억하고 다음 렌더링이 일어날 때 이전 렌더된 결과와 비교하여, 같은경우 기억하고 있는 내용을 재사용 하도록 한다.
+- 자식 컴포넌트에게 props로 전달할 때 기억해 놓은 함수의 참조값을 전달하여 자식 컴포넌트에서의 불필요한 렌더링을 막는다.
 
-### Code Splitting
+### 2. `useMemo`
+- 연산한 값을 기억하여 재사용하고, 이를 통해 함수가 렌더링 시마다 생성되는 것을 막는다.
+- 자식 컴포넌트에게 props를 전달할 때 계속 새로운 값을 넘겨주는 것을 막고, 기억하고 있는 값을 전달하여 자식 컴포넌트의 렌더링을 최소화한다.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+<br>
 
-### Analyzing the Bundle Size
+## 도전과 성장
+### 1. 최적화
+이 프로젝트를 통해 최적화 과정에 대해서 조금이나마 알게 되었다. 작은 프로젝트이기 때문에 큰 필요성이 없었을 수도 있었겠지만, 오히려 작은 프로젝트였기 때문에 그 과정에서 여러가지를 시도하며 알아나갈 수 있었다. 하지만 어디까지 최적화가 이루어져야 하는지 등에 대해서 더 공부를 해야겠다고 생각했다.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### 2. 네트워크 통신
+이 프로젝트는 서버와의 통신 없이 client에서 데이터를 관리하는 방식으로 수업을 진행했지만, client와 server가 어떤방식으로 데이터를 주고받는지 그 유기적인 과정을 처리해 보고 싶었고, 기본적인 데이터 처리 기능인 CRUD 를 경험하고, 공부하고 싶다는 생각으로 기존의 프로젝트에 node.js, mongoDB를  이용하여 서버를 만들어, 서버와의 통신을 통해 데이터를 관리하였다.
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
