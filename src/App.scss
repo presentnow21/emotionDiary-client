@@ -15,17 +15,18 @@ body {
 
 .App {
   min-height: 100vh;
+  min-width: 350px;
   padding: 0 20px;
 }
 
-@media (min-width: 650px) {
+@media (min-width: 1024px) {
   .App {
     width: 640px;
   }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 1023px) {
   .App {
-    width: 90vw;
+    width: 80vw;
   }
 }
